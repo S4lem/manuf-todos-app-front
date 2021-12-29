@@ -2,7 +2,7 @@
   "name": "hooks-todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jacob-ebey.github.io/hooks-todo",
+  "homepage": ".",
   "dependencies": {
     "axios": "^0.24.0",
     "core-js": "^2.6.12",
