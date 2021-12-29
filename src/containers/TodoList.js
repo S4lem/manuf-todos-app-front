@@ -1,6 +1,9 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect} from "react";
 import { NavLink } from "react-router-dom";
 import useRouter from "use-react-router";
+//import { useDispatch } from "react-redux";
+
+import { retrieveTodos, saveTodo } from "../actions/todos";
 
 import useInput from "../hooks/useInput";
 import useOnEnter from "../hooks/useOnEnter";
@@ -10,11 +13,19 @@ import TodoItem from "./TodoItem";
 export default function TodoList() {
   const router = useRouter();
 
-  const [todos, { addTodo, deleteTodo, setDone }] = useTodos();
-
+  const [todos, { addTodo, deleteTodo, setDone, updateTodos}] = useTodos();
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
   ]);
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      const response = await retrieveTodos();
+      updateTodos(response.data.message)
+    }
+    fetchMyAPI()
+    
+  }, []);
 
   const visibleTodos = useMemo(
     () =>
@@ -51,9 +62,11 @@ export default function TodoList() {
 
   const [newValue, onNewValueChange, setNewValue] = useInput();
   const onAddTodo = useOnEnter(
-    () => {
+    async () => {
       if (newValue) {
         addTodo(newValue);
+        let res = saveTodo(newValue);
+        console.log(res)
         setNewValue("");
       }
     },

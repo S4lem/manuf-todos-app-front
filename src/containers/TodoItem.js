@@ -4,13 +4,19 @@ import useOnClickOutside from "use-onclickoutside";
 import useDoubleClick from "../hooks/useDoubleClick";
 import useOnEnter from "../hooks/useOnEnter";
 import useTodos from "../reducers/useTodos";
+import { deleteTodoById } from "../actions/todos";
 
 export default function TodoItem({ todo }) {
   const [, { deleteTodo, setLabel, toggleDone }] = useTodos(() => null);
 
   const [editing, setEditing] = useState(false);
 
-  const onDelete = useCallback(() => deleteTodo(todo.id), [todo.id]);
+  const onDelete = useCallback(async () => {
+    console.log('Going to delete ' + todo.id)
+    const response = await deleteTodoById(todo.id);
+    console.log(response.data.message)
+    return deleteTodo(todo.id, [todo.id]);
+  });
   const onDone = useCallback(() => toggleDone(todo.id), [todo.id]);
   const onChange = useCallback(event => setLabel(todo.id, event.target.value), [
     todo.id
@@ -21,7 +27,6 @@ export default function TodoItem({ todo }) {
     () => {
       setEditing(false);
       setLabel(todo.id, todo.label.trim());
-      
     },
     [todo]
   );

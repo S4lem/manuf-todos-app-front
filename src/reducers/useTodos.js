@@ -15,6 +15,11 @@ export const reducer = {
   // Create a new item
   addTodo: (state, label) => [newTodo(label), ...state],
 
+  updateTodos: (state, todos) => {
+    state.todos = todos
+    return todos
+  },
+
   // Set the done state of an item
   setDone: (state, id, done) =>
     state.map(i =>
@@ -48,7 +53,7 @@ export const reducer = {
         : i
     )
 };
-
+/*
 export default globalReducer(
   // Load todos from local storage
   JSON.parse(localStorage.getItem("todos") || "[]"),
@@ -56,3 +61,28 @@ export default globalReducer(
   // On state change, persist to local storage
   todos => localStorage.setItem("todos", JSON.stringify(todos))
 );
+*/
+
+
+
+export default globalReducer(
+  // Load todos from local storage
+  [],
+  reducer,
+  // On state change, persist to local storage
+  todos => localStorage.setItem("todos", JSON.stringify(todos))
+);
+
+
+/*
+  async () => {
+    const resp =  await retrieveTodos();
+    console.log("pb ici")
+    console.log(resp.data.message)
+
+    //return resp.data
+    // return Promise.resolve(resp);
+    return resp.data.message
+  }
+
+  */
