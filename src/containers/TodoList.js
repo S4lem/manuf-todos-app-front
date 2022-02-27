@@ -21,8 +21,8 @@ export default function TodoList() {
   useEffect(() => {
     async function fetchMyAPI() {
       const response = await retrieveTodos();
-      console.log(response.data.data)
-      updateTodos(response.data.data)
+      console.log(response.data)
+      updateTodos(response.data)
     }
     fetchMyAPI()
     

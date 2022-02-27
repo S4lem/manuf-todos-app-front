@@ -19,7 +19,7 @@ import TodosDataService from "../services/TodosService";
 
 export const retrieveTodos = async () => {
     try {
-        const response = await TodosDataService.getAll()
+        const response = await TodosDataService.getAll();
         return response
     } catch (err) {
         console.log("error here");
