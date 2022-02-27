@@ -23,7 +23,7 @@ export default function TodoList() {
       const response = await retrieveTodos();
       console.log(response.data)
       console.log(response.data.data)
-      updateTodos(response.data.data)
+      updateTodos(response.data)
     }
     fetchMyAPI()
     
